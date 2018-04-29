@@ -1,0 +1,13 @@
+MAS ierHazi {
+
+	infrastructure: Centralised
+
+	environment: StoreHouseEnv
+
+	agents:
+		fl1;
+		fl2;
+
+	aslSourcePath:
+		"src/asl";
+}
