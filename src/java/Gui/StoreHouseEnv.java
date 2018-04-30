@@ -5,14 +5,16 @@ import jason.asSyntax.*;
 import jason.environment.*;
 import java.util.logging.*;
 
-import Gui.*;
-
 public class StoreHouseEnv extends Environment {
 
 	public static final int maxCapacity = 100;
 	
+	public static final Literal truckArrived  = Literal.parseLiteral("truck(box)");
+	public static final Literal putOnBox  = Literal.parseLiteral("putBox(shelf)");
+	public static final Literal takeOffBox  = Literal.parseLiteral("takeBox(shelf)");
+	
 	private GUI gui;
-	private int numOfForklifts = 0;
+	private int numOfForklifts;
 	private int capacity = 100;
 	private boolean isRunning = true;
 	private boolean truckAtEntry = false;
@@ -21,6 +23,8 @@ public class StoreHouseEnv extends Environment {
 
     public StoreHouseEnv() {
     	gui = new GUI(this);
+    	numOfForklifts = 2;
+    	
     	Thread truckThread = new Thread(() -> {
     		try {
     			while(isRunning) {
@@ -37,10 +41,22 @@ public class StoreHouseEnv extends Environment {
 
     @Override
     public boolean executeAction(String agName, Structure action) {
-        logger.info("executing: "+action+", but not implemented!");
-        if (true) { // you may improve this condition
-             informAgsEnvironmentChanged();
-        }
+    	logger.info(agName+" executing: "+action+"!");
+        try {
+        	if(action.equals(truckArrived)) {
+				//TODO
+			}
+        	if(action.equals(putOnBox)) {
+				capacity -=1;
+				gui.changeCapacity(capacity);
+			}
+    		if(action.equals(takeOffBox)) {
+				//TODO
+			}
+        } catch(Exception e) {}
+        
+        informAgsEnvironmentChanged();
+        
         return true; // the action was executed with success
     }
 
@@ -48,6 +64,10 @@ public class StoreHouseEnv extends Environment {
     @Override
     public void stop() {
         super.stop();
+    }
+    
+    public int getNumOfForklifts() {
+    	return numOfForklifts;
     }
     
     public int getCapacity() {

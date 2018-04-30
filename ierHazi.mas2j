@@ -6,9 +6,9 @@ MAS ierHazi {
 
 	agents:
 		entryGate;
-		truck;
+		truck #3;
 		shelf;
-		forklift;
+		forklift #2;
 
 	aslSourcePath:
 		"src/asl";

@@ -12,6 +12,7 @@ public class GUI extends JFrame {
     private Box box;
     private StoreHouseEnv env;
     private JTextArea output;
+    private JLabel capacityLabel;
     
     public GUI(StoreHouseEnv storeHouseEnv) {
         super("Warehouse details");
@@ -25,12 +26,7 @@ public class GUI extends JFrame {
         
         //forklifts
         JPanel numOfForklifts = new JPanel();
-        numOfForklifts.add(new JLabel("Number of Forklifts:"));
-        JComboBox forklifts = new JComboBox();
-        for(int i = 0;i<10;i++) {
-        	forklifts.addItem(i);
-        }
-        numOfForklifts.add(forklifts);
+        numOfForklifts.add(new JLabel("Number of Forklifts:" + env.getNumOfForklifts()));
         
         //open the gate
         JButton entryButton = new JButton("Open the gate");
@@ -38,7 +34,8 @@ public class GUI extends JFrame {
         
         //capacity
         JPanel capacityPanel = new JPanel();
-        capacityPanel.add(new JLabel("Current capacity:" + env.getCapacity() + "/" + env.maxCapacity));
+        capacityLabel = new JLabel("Current capacity:" + env.getCapacity() + "/" + env.maxCapacity);
+        capacityPanel.add(capacityLabel);
         
         //output
         output = new JTextArea(6, 18);
@@ -68,6 +65,10 @@ public class GUI extends JFrame {
         };
         return action;
     }
+	
+	public void changeCapacity(int cap) {
+		capacityLabel.setText("Current capacity:" + env.getCapacity() + "/" + env.maxCapacity);
+	}
 	
 	public void out(String out) {
         output.append(out + "\n");
