@@ -2,11 +2,13 @@ MAS ierHazi {
 
 	infrastructure: Centralised
 
-	environment: StoreHouseEnv
+	environment: Gui.StoreHouseEnv
 
 	agents:
-		fl1;
-		fl2;
+		entryGate;
+		truck;
+		shelf;
+		forklift;
 
 	aslSourcePath:
 		"src/asl";
