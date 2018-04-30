@@ -14,7 +14,7 @@ public class GUI extends JFrame {
     private JTextArea output;
     
     public GUI(StoreHouseEnv storeHouseEnv) {
-        super("Raktár részletek");
+        super("Warehouse details");
         env = storeHouseEnv;
         init();
     }
@@ -25,7 +25,7 @@ public class GUI extends JFrame {
         
         //forklifts
         JPanel numOfForklifts = new JPanel();
-        numOfForklifts.add(new JLabel("Targoncák száma:"));
+        numOfForklifts.add(new JLabel("Number of Forklifts:"));
         JComboBox forklifts = new JComboBox();
         for(int i = 0;i<10;i++) {
         	forklifts.addItem(i);
@@ -33,12 +33,12 @@ public class GUI extends JFrame {
         numOfForklifts.add(forklifts);
         
         //open the gate
-        JButton entryButton = new JButton("Kapu nyitása");
+        JButton entryButton = new JButton("Open the gate");
         entryButton.addActionListener(onGateClick());
         
         //capacity
         JPanel capacityPanel = new JPanel();
-        capacityPanel.add(new JLabel("Raktár aktuális kapacitása:" + env.getCapacity() + "/" + env.maxCapacity));
+        capacityPanel.add(new JLabel("Current capacity:" + env.getCapacity() + "/" + env.maxCapacity));
         
         //output
         output = new JTextArea(6, 18);

@@ -55,14 +55,16 @@ public class StoreHouseEnv extends Environment {
     }
     
     public void openGate() {
-    	truckAtEntry = false;
-    	gui.out("Kamion beengedve!");
+    	if(truckAtEntry) {
+	    	truckAtEntry = false;
+	    	gui.out("Truck entered!");
+    	}
     }
     
     public void truckArrived() {
     	if(!truckAtEntry) {
 	    	truckAtEntry = true;
-	    	gui.out("Kamion várakozik a bejáratnál!");
+	    	gui.out("Truck waiting at entry!");
     	}
     }
 }
