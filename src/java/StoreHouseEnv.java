@@ -1,7 +1,6 @@
 // Environment code for project ierHazi
 
 import jason.asSyntax.*;
-import jason.asSyntax.parser.ParseException;
 import jason.environment.*;
 import java.util.logging.*;
 
@@ -13,12 +12,7 @@ public class StoreHouseEnv extends Environment {
     @Override
     public void init(String[] args) {
         super.init(args);
-        try {
-			addPercept(ASSyntax.parseLiteral("percept(demo)"));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		addPercept(Literal.parseLiteral("percept(demo)"));
     }
 
     @Override
