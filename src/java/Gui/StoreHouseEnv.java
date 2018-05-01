@@ -85,8 +85,12 @@ public class StoreHouseEnv extends Environment {
     public void openGate() {
     	if(truckAtEntry) {
     		addPercept("entryGate",Literal.parseLiteral("opengate("+lastArrivedTruckName+")")); 
-    		addPercept("forklift1",Literal.parseLiteral("put"));
-	    	truckAtEntry = false;
+    	
+    		//----------------------------------------------------------------------TESZT
+    			addPercept("forklift1",Literal.parseLiteral("put"));
+    		//----------------------------------------------------------------------TESZT
+    		
+    		truckAtEntry = false;
 	    	gui.entryButton.setEnabled(false);
 	    	gui.out("Truck entered!");
     	}
