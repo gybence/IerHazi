@@ -14,3 +14,9 @@
 +truck[source(truck1)] : true <- .drop_desire(putBox(shelf)); .
 +truck[source(truck2)] : true <- .drop_desire(putBox(shelf)); .
 +truck[source(truck3)] : true <- .drop_desire(putBox(shelf)); .
+
++put: true
+	<- .send(shelf,tell,putOnIt).
+
++take: true
+	<- .send(shelf,tell,takeOffIt).
