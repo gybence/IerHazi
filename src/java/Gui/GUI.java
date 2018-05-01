@@ -9,10 +9,12 @@ import javax.swing.*;
 
 public class GUI extends JFrame {
 	
-    private Box box;
+	private static final long serialVersionUID = 1L;
+	private Box box;
     private StoreHouseEnv env;
     private JTextArea output;
     private JLabel capacityLabel;
+    public JButton entryButton;
     
     public GUI(StoreHouseEnv storeHouseEnv) {
         super("Warehouse details");
@@ -29,12 +31,13 @@ public class GUI extends JFrame {
         numOfForklifts.add(new JLabel("Number of Forklifts:" + env.getNumOfForklifts()));
         
         //open the gate
-        JButton entryButton = new JButton("Open the gate");
+        entryButton = new JButton("Open the gate");
+        entryButton.setEnabled(false);
         entryButton.addActionListener(onGateClick());
         
         //capacity
         JPanel capacityPanel = new JPanel();
-        capacityLabel = new JLabel("Current capacity:" + env.getCapacity() + "/" + env.maxCapacity);
+        capacityLabel = new JLabel("Current capacity:" + env.getCapacity() + "/" + StoreHouseEnv.maxCapacity);
         capacityPanel.add(capacityLabel);
         
         //output
@@ -67,7 +70,7 @@ public class GUI extends JFrame {
     }
 	
 	public void changeCapacity(int cap) {
-		capacityLabel.setText("Current capacity:" + env.getCapacity() + "/" + env.maxCapacity);
+		capacityLabel.setText("Current capacity:" + env.getCapacity() + "/" + StoreHouseEnv.maxCapacity);
 	}
 	
 	public void out(String out) {

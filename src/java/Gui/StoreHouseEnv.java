@@ -4,6 +4,7 @@ package Gui;
 import jason.asSyntax.*;
 import jason.environment.*;
 import java.util.logging.*;
+import java.util.Random;
 
 public class StoreHouseEnv extends Environment {
 
@@ -15,16 +16,22 @@ public class StoreHouseEnv extends Environment {
 	
 	private GUI gui;
 	private int numOfForklifts;
+	private int numOfTrucks;
 	private int capacity = 100;
 	private boolean isRunning = true;
 	private boolean truckAtEntry = false;
+	private Random randomGen;
+	private String lastArrivedTruckName;
 	
     private Logger logger = Logger.getLogger("ierHazi."+StoreHouseEnv.class.getName());
 
+	
+
     public StoreHouseEnv() {
+    	randomGen = new Random(2); // ez pont jo seed 2,1,3
     	gui = new GUI(this);
     	numOfForklifts = 2;
-    	
+    	numOfTrucks = 3;
     	Thread truckThread = new Thread(() -> {
     		try {
     			while(isRunning) {
@@ -42,9 +49,10 @@ public class StoreHouseEnv extends Environment {
     @Override
     public boolean executeAction(String agName, Structure action) {
     	logger.info(agName+" executing: "+action+"!");
-        try {
+        try {        	
+        	
         	if(action.equals(truckArrived)) {
-				//TODO
+        		addPercept("entryGate",Literal.parseLiteral("wtf")); 
 			}
         	if(action.equals(putOnBox)) {
 				capacity -=1;
@@ -76,14 +84,26 @@ public class StoreHouseEnv extends Environment {
     
     public void openGate() {
     	if(truckAtEntry) {
+    		addPercept("entryGate",Literal.parseLiteral("opengate("+lastArrivedTruckName+")")); 
 	    	truckAtEntry = false;
+	    	gui.entryButton.setEnabled(false);
 	    	gui.out("Truck entered!");
     	}
     }
     
     public void truckArrived() {
     	if(!truckAtEntry) {
+    		
+    		//TODO: nem jo a random, vhogy meg kell jegyezni melyik kamionok vannak epp megerkezve
+    		// es a nem megerkezettek kozul valasztani.. but its something
+    		int truckNum = randomGen.nextInt(numOfTrucks) + 1 ;
+    		String agName = "truck" + Integer.toString(truckNum);
+    		
+    		addPercept(agName,Literal.parseLiteral("arrived")); 
+    		
+    		lastArrivedTruckName = agName;
 	    	truckAtEntry = true;
+	    	gui.entryButton.setEnabled(true);
 	    	gui.out("Truck waiting at entry!");
     	}
     }

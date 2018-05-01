@@ -4,8 +4,19 @@
 
 /* Initial goals */
 
-!start.
+//!start.
 
 /* Plans */
 
-+!start : true <- .print("hello world.").
+
++truck(N) : true 
+		<-	//.print("entry megmondva", N,"-nek");
+			 .send(N,tell,entryGate).
+			 
++arrived(T) : true
+		<- .print("kamion jott: ", T).
+		
++opengate(T) : true
+		<- .send(T,tell,letin).
+			
+			
