@@ -7,16 +7,10 @@
 //!start.
 
 /* Plans */
-
-
-+truck(N) : true 
-		<-	//.print("entry megmondva", N,"-nek");
-			 .send(N,tell,entryGate).
 			 
 +arrived(T) : true
-		<- .print("kamion jott: ", T).
+		<- .print("kamion jott: ", T);
+			.send(T,tell,entryGate).
 		
 +opengate(T) : true
-		<- .send(T,tell,letin).
-			
-			
+		<- .send(T,tell,comein).

@@ -13,10 +13,9 @@ capacity(25). //tfh ennyi hely van a kamionban
 
 +arrived : true
 		<- .my_name(N);
-			.send(entryGate,tell,truck(N));
 			.send(entryGate,tell,arrived(N)).
 
-+letin : true
++comein : true
 		<- .print("bejutottam a raktarba").
 			//TODO: szolni a shelfnek vagy a forklifteknek
 

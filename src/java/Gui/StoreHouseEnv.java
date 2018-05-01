@@ -97,7 +97,7 @@ public class StoreHouseEnv extends Environment {
     		//TODO: nem jo a random, vhogy meg kell jegyezni melyik kamionok vannak epp megerkezve
     		// es a nem megerkezettek kozul valasztani.. but its something
     		int truckNum = randomGen.nextInt(numOfTrucks) + 1 ;
-    		String agName = "truck" + Integer.toString(truckNum);
+    		String agName = "truck" + Integer.toString(truckNum); //osszeallitja melyik truck agens erezze magat ugy h eppen megjott 
     		
     		addPercept(agName,Literal.parseLiteral("arrived")); 
     		
