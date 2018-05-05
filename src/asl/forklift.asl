@@ -15,7 +15,7 @@
 			.send(entryGate,tell,forklift(N)).
 
 +truck(T)[source(percept)] : true
-		<- .print("asd ", T).
+		<- .print("ezt le kene pakolni: ", T).
 
 
 +putBox(shelf) <- putBox(shelf); .
