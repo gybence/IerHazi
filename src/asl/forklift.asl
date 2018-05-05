@@ -8,7 +8,11 @@
 
 /* Plans */
 
-+!start : true <- .print("new forklift added").
++!start : true 
+		<- //.print("new forklift added");
+			.my_name(N);
+			.send(shelf,tell,forklift(N));
+			.send(entryGate,tell,forklift(N)).
 
 +putBox(shelf) <- putBox(shelf); .
 +truck[source(truck1)] : true <- .drop_desire(putBox(shelf)); .

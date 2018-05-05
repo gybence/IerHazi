@@ -4,11 +4,10 @@
 capacity(100).
 /* Initial goals */
 
-!start.
++forklift(T) : true
+		<- .send(T,tell,shelf).
 
 /* Plans */
-
-+!start : true <- .print("hello world.").
 
 +putOnIt[source(W)] :  capacity(T) & T > 0
 	<- .print(W," put a box on the shelf");
