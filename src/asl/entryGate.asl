@@ -16,5 +16,7 @@
 		
 +opengate(T) : true    //a felhasznalo megnyomja a beengedes gombot, ekkor a kapu jelez a kamionnak, hogy bejohet
 		<- .send(T,tell,comein);
-		.abolish(arrived(T)[source(T)]). //el lehet felejteni h a kamion megerkezett, nem fontos mar
+			.findall(X,forklift(X),L);
+			notifyFls(L, T);
+			.abolish(arrived(T)[source(T)]). //el lehet felejteni h a kamion megerkezett, nem fontos mar
 		

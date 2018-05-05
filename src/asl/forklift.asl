@@ -14,6 +14,10 @@
 			.send(shelf,tell,forklift(N));
 			.send(entryGate,tell,forklift(N)).
 
++truck(T)[source(percept)] : true
+		<- .print("asd ", T).
+
+
 +putBox(shelf) <- putBox(shelf); .
 +truck[source(truck1)] : true <- .drop_desire(putBox(shelf)); .
 +truck[source(truck2)] : true <- .drop_desire(putBox(shelf)); .

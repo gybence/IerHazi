@@ -14,7 +14,7 @@ currentLoad(math.ceil(math.random(25))). //tfh ennyi doboz van rajta a letrehoza
 +comein : true   //a kamion jelzest kapott hogy bejohet
 		<- .print("bejutottam a raktarba");
 		
-			vmi; //oke ugy tunik igy az environmentnek lehet jelezni!!!!!!!!!!!!!!!!!!!!!! FONTOS
+			//vmi; //oke ugy tunik igy az environmentnek lehet jelezni!!!!!!!!!!!!!!!!!!!!!! FONTOS
 			
 			.abolish(arrived[source(percept)]). //a kamion is elfelejtheti mar h megerkezett mert nem fontos
 			//TODO: szolni a shelfnek vagy a forklifteknek

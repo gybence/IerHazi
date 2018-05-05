@@ -35,10 +35,21 @@ public class StoreHouseEnv extends Environment {
 	public boolean executeAction(String agName, Structure action) {
 		if(action.getFunctor().equals("vmi")) {
 			addPercept(agName,Literal.parseLiteral("vmi"));
-			logger.info("addPercept lefutott"); 
+			//logger.info("addPercept lefutott"); 
 		}
 		//TODO if else-be a tobbi environment fele meno jelzes es pls ezt a getFunctort hasznaljuk
 		//Term t = action.getTerm(0); //igy kell kivenni a parametert ha van
+		else if (action.getFunctor().equals("notifyFls")) {
+			String t0 = action.getTerm(0).toString();
+			t0 = t0.substring(1,t0.length()-1);
+			Term t1 = action.getTerm(1);
+			
+			String[] params = t0.split(",");		
+			for(String fl : params)
+				addPercept(fl,Literal.parseLiteral("truck("+ t1+")"));
+			
+			//logger.info("notifyFls lefutott ");
+		}
 		else
 			logger.info("Executing an action which is not implemented: "+ action);
 		
