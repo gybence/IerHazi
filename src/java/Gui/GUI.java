@@ -14,6 +14,7 @@ public class GUI extends JFrame {
     private StoreHouseEnv env;
     private JTextArea output;
     private JLabel capacityLabel;
+    private JLabel numOfFLsLabel;
     public JButton entryButton;
     
     public GUI(StoreHouseEnv storeHouseEnv) {
@@ -28,7 +29,8 @@ public class GUI extends JFrame {
         
         //forklifts
         JPanel numOfForklifts = new JPanel();
-        numOfForklifts.add(new JLabel("Number of Forklifts:" + env.getNumOfForklifts()));
+        numOfFLsLabel = new JLabel("Number of Forklifts: " + env.getNumOfForklifts());
+        numOfForklifts.add(numOfFLsLabel);
         
         //open the gate
         entryButton = new JButton("Open the gate");
@@ -37,7 +39,7 @@ public class GUI extends JFrame {
         
         //capacity
         JPanel capacityPanel = new JPanel();
-        capacityLabel = new JLabel("Current capacity:" + env.getCapacity() + "/" + StoreHouseEnv.maxCapacity);
+        capacityLabel = new JLabel("Current load: " + env.getLoad() + " / " + StoreHouseEnv.maxCapacity);
         capacityPanel.add(capacityLabel);
         
         //output
@@ -70,12 +72,14 @@ public class GUI extends JFrame {
     }
 	
 	public void changeCapacity(int cap) {
-		capacityLabel.setText("Current capacity:" + env.getCapacity() + "/" + StoreHouseEnv.maxCapacity);
+		capacityLabel.setText("Current capacity:" + env.getLoad() + "/" + StoreHouseEnv.maxCapacity);
 	}
 	
+	public void changeForkliftNum(int num) {
+		numOfFLsLabel.setText("Number of Forklifts: " + env.getNumOfForklifts());
+	}	
 	public void out(String out) {
         output.append(out + "\n");
         output.setCaretPosition(output.getDocument().getLength());
-    }
-	
+    }	
 }

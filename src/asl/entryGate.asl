@@ -1,12 +1,17 @@
 // Agent entryGate in project ierHazi
 
 /* Initial beliefs and rules */
-		
+//vmi(false).
 /* Initial goals */
 
-+forklift(T) : forklift(F)
-		<- .send(T,tell,entryGate).
++forklift(T) : true// & vmi(X) & X = true //forklift(F) & asdasd(F)
+		<- .send(T,tell,entryGate);
+			//.print("asd")    	//ez csak mindenfele teszt kod xdd
+			//?asdasd(F); //igy is lehet beliefet elkerni, de ha nem talalja meg akkor kiakad az agens
 			//.print(F, " egy uj forklift").
+			//.print(F, " vmi teszt").
+			.
+			
 
 /* Plans */
 			 

@@ -2,6 +2,7 @@
 
 /* Initial beliefs and rules */
 capacity(100).
+load(0).
 /* Initial goals */
 
 +forklift(T) : true

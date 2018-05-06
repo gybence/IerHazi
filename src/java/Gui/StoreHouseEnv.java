@@ -4,15 +4,16 @@ package Gui;
 import jason.asSyntax.*;
 import jason.environment.*;
 import java.util.logging.*;
+import java.util.List;
 import java.util.Random;
 
 public class StoreHouseEnv extends Environment {
 
 	public static final int maxCapacity = 100;
 	private GUI gui;
-	private int numOfForklifts;
-	private int numOfTrucks;
-	private int capacity = 100;
+	private int numOfForklifts = 2;
+	private int numOfTrucks = 3;
+	private int load = 0;
 	private boolean isRunning = true;
 	private boolean truckAtEntry = false;
 	private Random randomGen;
@@ -23,9 +24,7 @@ public class StoreHouseEnv extends Environment {
 	public StoreHouseEnv() {
 		randomGen = new Random(2); // ez pont jo seed 2,1,3
 		gui = new GUI(this);
-		numOfForklifts = 2;
-		numOfTrucks = 3;
-		
+
 		generateTrucks();
 	}
 
@@ -33,6 +32,7 @@ public class StoreHouseEnv extends Environment {
 
 	@Override
 	public boolean executeAction(String agName, Structure action) {
+
 		if(action.getFunctor().equals("vmi")) {
 			addPercept(agName,Literal.parseLiteral("vmi"));
 			//logger.info("addPercept lefutott"); 
@@ -44,14 +44,24 @@ public class StoreHouseEnv extends Environment {
 			t0 = t0.substring(1,t0.length()-1);
 			Term t1 = action.getTerm(1);
 			
-			String[] params = t0.split(",");		
-			for(String fl : params)
+			String[] forklifts = t0.split(",");	
+			for(String fl : forklifts) {
 				addPercept(fl,Literal.parseLiteral("truck("+ t1+")"));
+				//logger.info("notifyFls lefutott agName: "+ fl +" percepts: "+ ehh);
+			}				
+						
 			
-			//logger.info("notifyFls lefutott ");
+			logger.info("notifyFls lefutott ");
 		}
-		else
-			logger.info("Executing an action which is not implemented: "+ action);
+		else if(action.getFunctor().equals("nemertem")) {
+				List<Literal> perceptList = consultPercepts(agName);
+				String percepts = "";
+				for(Literal p : perceptList)
+					percepts = percepts + " " + p.toString();	
+			
+				logger.info("nemertem lefutott agName: "+ agName +" percepts: " + percepts);
+		}
+		else logger.info("Executing an action which is not implemented: "+ action);
 		
 		informAgsEnvironmentChanged();
 
@@ -68,8 +78,8 @@ public class StoreHouseEnv extends Environment {
 		return numOfForklifts;
 	}
 
-	public int getCapacity() {
-		return capacity;
+	public int getLoad() {
+		return load;
 	}
 
 	public void openGate() { //gombnyomas kezelo fv
@@ -98,7 +108,6 @@ public class StoreHouseEnv extends Environment {
 
 			//jelzes az agensek es az UI fele
 			addPercept(agName, Literal.parseLiteral("arrived"));
-
 			lastArrivedTruckName = agName;
 			truckAtEntry = true;
 			gui.entryButton.setEnabled(true);

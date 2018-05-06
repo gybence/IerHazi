@@ -7,7 +7,7 @@ currentLoad(math.ceil(math.random(25))). //tfh ennyi doboz van rajta a letrehoza
 
 /* Plans */
 
-+arrived : true  //environment allitja be egy kulon szalrol! megerkezik a kamion, szol a kapunak (ember)
++arrived : true //environment allitja be egy kulon szalrol! megerkezik a kamion, szol a kapunak (ember)
 		<- .my_name(N);
 			.send(entryGate,tell,arrived(N)).
 
@@ -19,7 +19,7 @@ currentLoad(math.ceil(math.random(25))). //tfh ennyi doboz van rajta a letrehoza
 			.abolish(arrived[source(percept)]). //a kamion is elfelejtheti mar h megerkezett mert nem fontos
 			//TODO: szolni a shelfnek vagy a forklifteknek
 
-+vmi : true // ez a jelzes az environmenttol jott
++vmi : true // ez a jelzes az environmenttol jott addperceptel
 		<- .print("vki meghivta ezt a fura fv-t teszteles celjabol").
 
 +truck(box) : true

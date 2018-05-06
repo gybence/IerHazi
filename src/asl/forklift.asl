@@ -1,7 +1,7 @@
 // Agent forklift in project ierHazi
 
 /* Initial beliefs and rules */
-
+raer.
 /* Initial goals */
 
 !start.
@@ -15,7 +15,8 @@
 			.send(entryGate,tell,forklift(N)).
 
 +truck(T)[source(percept)] : true
-		<- .print("ezt le kene pakolni: ", T).
+		<- .print("ezt le kene pakolni: ", T);
+		nemertem.
 
 
 +putBox(shelf) <- putBox(shelf); .
