@@ -16,12 +16,11 @@
 /* Plans */
 			 
 +arrived(T) : true    //egy kamion szolt, hogy megerkezett
-		<- .print("kamion jott: ", T);
-			.send(T,tell,entryGate).
+		<- .print("kamion jott: ", T).
 		
 +opengate(T) : true    //a felhasznalo megnyomja a beengedes gombot, ekkor a kapu jelez a kamionnak, hogy bejohet
 		<- .send(T,tell,comein);
-			.findall(X,forklift(X),L);
-			notifyFls(L, T);
+			.findall(X,free(X),L);
+			assignTruckToForklift(L, T);
 			.abolish(arrived(T)[source(T)]). //el lehet felejteni h a kamion megerkezett, nem fontos mar
 		

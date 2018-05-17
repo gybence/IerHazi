@@ -13,7 +13,7 @@ public class StoreHouseEnv extends Environment {
 	private GUI gui;
 	private int numOfForklifts = 2;
 	private int numOfTrucks = 3;
-	private int load = 0;
+	private int load = 25;
 	private boolean isRunning = true;
 	private boolean truckAtEntry = false;
 	private Random randomGen;
@@ -39,19 +39,23 @@ public class StoreHouseEnv extends Environment {
 		}
 		//TODO if else-be a tobbi environment fele meno jelzes es pls ezt a getFunctort hasznaljuk
 		//Term t = action.getTerm(0); //igy kell kivenni a parametert ha van
-		else if (action.getFunctor().equals("notifyFls")) {
+		else if (action.getFunctor().equals("assignTruckToForklift")) {
+			//szabad forkliftek listaba szedese
 			String t0 = action.getTerm(0).toString();
 			t0 = t0.substring(1,t0.length()-1);
-			Term t1 = action.getTerm(1);
 			
-			String[] forklifts = t0.split(",");	
-			for(String fl : forklifts) {
-				addPercept(fl,Literal.parseLiteral("truck("+ t1+")"));
-				//logger.info("notifyFls lefutott agName: "+ fl +" percepts: "+ ehh);
-			}				
-						
+			if(t0.length()>0) {
+				String[] forklifts = t0.split(",");	
+				//kiosztando kamion neve
+				Term t1 = action.getTerm(1);
 			
-			logger.info("notifyFls lefutott ");
+				
+				for(String fl : forklifts) {
+					addPercept(fl,Literal.parseLiteral("truck("+ t1+")"));
+					//logger.info("notifyFls lefutott agName: "+ fl +" percepts: "+ ehh);
+				}
+				logger.info("assignTruckToForklift lefutott ");
+			}
 		}
 		else if(action.getFunctor().equals("nemertem")) {
 				List<Literal> perceptList = consultPercepts(agName);

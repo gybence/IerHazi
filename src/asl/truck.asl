@@ -22,8 +22,4 @@ currentLoad(math.ceil(math.random(25))). //tfh ennyi doboz van rajta a letrehoza
 +vmi : true // ez a jelzes az environmenttol jott addperceptel
 		<- .print("vki meghivta ezt a fura fv-t teszteles celjabol").
 
-+truck(box) : true
-		<- truck(box); 
-			.send(forklift1,tell,truck); 
-			//.send(forklift2,tell,truck);
-			.print("truck arrived").
+		
