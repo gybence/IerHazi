@@ -31,3 +31,8 @@ load(25).
 			loadchanged(X);
 			.send(S,tell,takeSuccess);
 			.
+			
++take(O)[source(S)] : not (load(L) & capacity(C) & L - O >= 0)
+<- .print("xdd baj van, nincs eleg cucc a raktarban");
+			.send(S,tell,takeFailure);
+			.
