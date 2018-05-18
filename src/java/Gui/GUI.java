@@ -24,7 +24,7 @@ public class GUI extends JFrame {
     }
 
 	public void init() {
-
+ 
         Container c = getContentPane();
         
         //forklifts
