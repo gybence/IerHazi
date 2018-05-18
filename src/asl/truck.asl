@@ -1,7 +1,6 @@
 // Agent truck in project ierHazi
 
 /* Initial beliefs and rules */
-maxLoad(25). //tfh ennyi hely van a kamionban 
 currentLoad(math.ceil(math.random(25))). //tfh ennyi doboz van rajta a letrehozaskor (ennyivel erkezik meg eloszor)
 order(math.ceil(math.random(25))). //megrendeles
 /* Initial goals */
@@ -21,9 +20,3 @@ order(math.ceil(math.random(25))). //megrendeles
 			
 			.abolish(arrived[source(percept)]). //a kamion is elfelejtheti mar h megerkezett mert nem fontos
 			//TODO: szolni a shelfnek vagy a forklifteknek
-
-+clear : true 
-		<- -+currentLoad(0);
-			.
-
-		

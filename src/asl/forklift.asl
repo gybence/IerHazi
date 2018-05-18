@@ -28,6 +28,16 @@ free(true).
 +!unload : truck(T,CL,O)
 		<- .print("csinaltam valamit ",T,"-vel");
 			.send(shelf,tell,put(CL));
-			.send(T,tell,clear);
+			.
+
++putSuccess : true
+		<- ?truck(T,CL,O);
+			.send(shelf,tell,take(O));
+			.send(shelf,untell,put(CL));
+			.
+			
++takeSuccess : true 
+		<- ?truck(T,CL,O);
+			.send(shelf,untell,take(O));
 			.
 			
