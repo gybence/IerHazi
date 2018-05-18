@@ -3,13 +3,16 @@
 /* Initial beliefs and rules */
 maxLoad(25). //tfh ennyi hely van a kamionban 
 currentLoad(math.ceil(math.random(25))). //tfh ennyi doboz van rajta a letrehozaskor (ennyivel erkezik meg eloszor)
+order(math.ceil(math.random(25))). //megrendeles
 /* Initial goals */
 
 /* Plans */
 
 +arrived : true //environment allitja be egy kulon szalrol! megerkezik a kamion, szol a kapunak (ember)
 		<- .my_name(N);
-			.send(entryGate,tell,arrived(N)).
+			?currentLoad(C);
+			?order(O);
+			.send(entryGate,tell,arrived(N,C,O)).
 
 +comein : true   //a kamion jelzest kapott hogy bejohet
 		<- .print("bejutottam a raktarba");

@@ -16,8 +16,8 @@
 
 /* Plans */
 			 
-+arrived(T) : true    //egy kamion szolt, hogy megerkezett
-		<- .print("kamion jott: ", T).
++arrived(T,_,_) : true    //egy kamion szolt, hogy megerkezett
+		<- .print("kamion jott: ", T). //kapu szol nekunk
 		
 +opengate(T) : true   		 //a felhasznalo megnyomja a beengedes gombot, ekkor a kapu jelez a kamionnak, hogy bejohet
 		<- !opengategoal.
@@ -25,8 +25,9 @@
 
 +!opengategoal : opengate(T) & free(F)
 		<- .send(T,tell,comein);
-			.print(F,T);
-			.send(F,tell,truck(T));
+			//.print(F,T);
+			?arrived(_,C,O)
+			.send(F,tell,truck(T,C,O));
 			//.findall(X,free(X),L);
 			//assignTruckToForklift(L, T);
 			.abolish(arrived(_)); //el lehet felejteni h a kamion megerkezett, nem fontos mar

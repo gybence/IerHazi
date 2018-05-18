@@ -56,12 +56,8 @@ public class StoreHouseEnv extends Environment {
 			}
 		}
 		else if(action.getFunctor().equals("nemertem")) {
-				List<Literal> perceptList = consultPercepts(agName);
-				String percepts = "";
-				for(Literal p : perceptList)
-					percepts = percepts + " " + p.toString();	
-			
-				logger.info("nemertem lefutott agName: "+ agName +" percepts: " + percepts);
+				
+			listAgentPercepts(agName);
 		}
 		else logger.info("Executing an action which is not implemented: "+ action);
 		
@@ -86,16 +82,29 @@ public class StoreHouseEnv extends Environment {
 
 	public void openGate() { //gombnyomas kezelo fv
 		if (truckAtEntry) {
+
+			//listAgentPercepts("entryGate");
+			
 			addPercept("entryGate", Literal.parseLiteral("opengate(" + lastArrivedTruckName + ")")); 
-
-			// ----------------------------------------------------------------------TESZT
-			// addPercept("forklift1",Literal.parseLiteral("put"));
-			// ----------------------------------------------------------------------TESZT
-
+			
+			//listAgentPercepts("entryGate");
+		
+			
 			truckAtEntry = false;
 			gui.entryButton.setEnabled(false);
 			gui.out("Truck entered!");
 		}
+	}
+
+
+
+	private void listAgentPercepts(String agName) {
+		List<Literal> perceptList = consultPercepts(agName);
+		String percepts = "";
+		for(Literal p : perceptList)
+			percepts = percepts + " " + p.toString();	
+
+		logger.info(agName +" percepts: " + percepts);
 	}
 	
 	public void truckArrived() {
