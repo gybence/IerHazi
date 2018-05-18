@@ -39,7 +39,8 @@ public class GUI extends JFrame {
         
         //capacity
         JPanel capacityPanel = new JPanel();
-        capacityLabel = new JLabel("Current load: " + env.getLoad() + " / " + StoreHouseEnv.maxCapacity);
+        capacityLabel = new JLabel();
+        updateLoad();
         capacityPanel.add(capacityLabel);
         
         //output
@@ -71,8 +72,8 @@ public class GUI extends JFrame {
         return action;
     }
 	
-	public void changeCapacity(int cap) {
-		capacityLabel.setText("Current capacity:" + env.getLoad() + "/" + StoreHouseEnv.maxCapacity);
+	public void updateLoad() {
+		capacityLabel.setText("Current load: " + env.getLoad() + " / " + StoreHouseEnv.maxCapacity);
 	}
 	
 	public void changeForkliftNum(int num) {

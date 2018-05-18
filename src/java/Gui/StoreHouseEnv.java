@@ -55,9 +55,10 @@ public class StoreHouseEnv extends Environment {
 				//logger.info("assignTruckToForklift lefutott ");
 			}
 		}
-		else if(action.getFunctor().equals("nemertem")) {
-				
-			listAgentPercepts(agName);
+		else if(action.getFunctor().equals("loadchanged")) {
+				String t0 = action.getTerm(0).toString();
+				load = Integer.parseInt(t0);
+				gui.updateLoad();
 		}
 		else logger.info("Executing an action which is not implemented: "+ action);
 		
@@ -98,6 +99,7 @@ public class StoreHouseEnv extends Environment {
 
 
 
+	@SuppressWarnings("unused")
 	private void listAgentPercepts(String agName) {
 		List<Literal> perceptList = consultPercepts(agName);
 		String percepts = "";

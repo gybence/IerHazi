@@ -30,7 +30,7 @@
 			.send(F,tell,truck(T,C,O));
 			//.findall(X,free(X),L);
 			//assignTruckToForklift(L, T);
-			.abolish(arrived(_)); //el lehet felejteni h a kamion megerkezett, nem fontos mar
+			//.abolish(arrived(T,_,_)); //el lehet felejteni h a kamion megerkezett, nem fontos mar
 			.
 
 +!opengategoal : opengate(T) & not free(F) //nem vol szabad fl

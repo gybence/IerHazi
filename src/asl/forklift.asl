@@ -15,7 +15,7 @@ free(true).
 			.send(entryGate,tell,forklift(N));
 			.
 			
-+truck(T,C,O) : true
++truck(T,CL,O) : true
 		<- //.print("megkaptam: ", T);
 		.my_name(N);
 		.abolish(free(_));
@@ -25,13 +25,9 @@ free(true).
 		.
 
 
--!unload : truck(T)
-		<- !unload.
-
-+!unload : truck(T,C,O)
++!unload : truck(T,CL,O)
 		<- .print("csinaltam valamit ",T,"-vel");
-			
+			.send(shelf,tell,put(CL));
+			.send(T,tell,clear);
 			.
-		
-+nemertem : true 
-		<- .print("asdasd").
+			
