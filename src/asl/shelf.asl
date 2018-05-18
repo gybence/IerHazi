@@ -5,8 +5,8 @@ capacity(100).
 load(25).
 /* Initial goals */
 
-+forklift(T) : true
-		<- .send(T,tell,shelf).
-
 /* Plans */
 
++forklift(T) : true
+		<- .my_name(N);
+		.send(T,tell,shelf(N)).

@@ -44,17 +44,15 @@ public class StoreHouseEnv extends Environment {
 			String t0 = action.getTerm(0).toString();
 			t0 = t0.substring(1,t0.length()-1);
 			
-			if(t0.length()>0) {
+			if(t0.length() > 0) {
 				String[] forklifts = t0.split(",");	
 				//kiosztando kamion neve
 				Term t1 = action.getTerm(1);
-			
 				
-				for(String fl : forklifts) {
-					addPercept(fl,Literal.parseLiteral("truck("+ t1+")"));
-					//logger.info("notifyFls lefutott agName: "+ fl +" percepts: "+ ehh);
-				}
-				logger.info("assignTruckToForklift lefutott ");
+				
+				//az elso raero targonca megkapja a kamiont
+				addPercept(forklifts[0],Literal.parseLiteral("truck("+ t1+")"));
+				//logger.info("assignTruckToForklift lefutott ");
 			}
 		}
 		else if(action.getFunctor().equals("nemertem")) {

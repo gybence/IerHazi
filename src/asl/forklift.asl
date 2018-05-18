@@ -5,7 +5,6 @@ free(true).
 /* Initial goals */
 
 !start.
-
 /* Plans */
 
 +!start : true 
@@ -13,11 +12,27 @@ free(true).
 			.my_name(N);
 			.send(shelf,tell,forklift(N));
 			.send(entryGate,tell,free(N));
-			.send(entryGate,tell,forklift(N)).
-
+			.send(entryGate,tell,forklift(N));
+			.
+			
 +truck(T)[source(percept)] : true
-		<- .print("ezt le kene pakolni: ", T);
-		nemertem.
+		<- .print("megkaptam: ", T);
+		.my_name(N);
+		.abolish(free(_));
+		.send(entryGate,untell,free(N));
+		//nemertem
+		!unload
+		.
+		
+		
++!unload : not truck(T)
+		<- .print("asdasdasd")
+		.
+		
+-!unload : truck(T)
+		<- !unload.
++!unload : truck(T)
+		<- .print("csinaltam valamit ",T,"-vel").
 		
 +nemertem : true 
 		<- .print("asdasd").
