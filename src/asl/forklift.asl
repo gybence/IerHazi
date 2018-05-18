@@ -34,8 +34,11 @@
 			.
 			
 +putFailure : true
-		<- .print("TODO!!!");
-			.			
+		<- ?truck(T,CL,O);
+			.send(T,tell,finished); 
+			!done;
+			.
+						
 +done : true 
 		<- ?truck(T,CL,O);
 			.send(T,tell,finished); 

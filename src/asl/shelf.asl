@@ -2,7 +2,7 @@
 
 /* Initial beliefs and rules */
 capacity(100).
-load(25).
+load(0).
 /* Initial goals */
 
 /* Plans */
@@ -21,6 +21,7 @@ load(25).
 			
 +put(CL)[source(S)] : not (load(L) & capacity(C) & L + CL <= C)
 		<- .print("ERROR, there is not enough capacity");
+			write("There is not enough capacity in the storehouse");
 			.send(S,tell,putFailure);
 			.
 			
@@ -34,5 +35,6 @@ load(25).
 			
 +take(O)[source(S)] : not (load(L) & capacity(C) & L - O >= 0)
 		<- .print("ERROR, there are not enough items");
+			write("There are not enough items in the storehouse");
 			.send(S,tell,done);
 			.

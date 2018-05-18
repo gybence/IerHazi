@@ -4,13 +4,9 @@
 //vmi(false).
 /* Initial goals */
 
-+forklift(T) : true						// & vmi(X) & X = true //forklift(F) & asdasd(F)
++forklift(T) : true						
 		<- .my_name(N);
 			.send(T,tell,entryGate(N));
-			//.print("asd")    	//ez csak mindenfele teszt kod xdd
-			//?asdasd(F); //igy is lehet beliefet elkerni, de ha nem talalja meg akkor kiakad az agens
-			//.print(F, " egy uj forklift").
-			//.print(F, " vmi teszt").
 			.
 			
 
@@ -32,9 +28,6 @@
 			//.print(F,T);
 			?arrived(_,C,O);
 			.send(F,tell,truck(T,C,O));
-			//.findall(X,free(X),L);
-			//assignTruckToForklift(L, T);
-			//.abolish(arrived(T,_,_)); //el lehet felejteni h a kamion megerkezett, nem fontos mar
 			.
 
 +!opengategoal : opengate(T) & not free(F) //nem vol szabad fl

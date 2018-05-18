@@ -44,6 +44,11 @@ public class StoreHouseEnv extends Environment {
 			removePercept(t0,Literal.parseLiteral("arrived"));
 			
 		}
+		else if(action.getFunctor().equals("write")) {
+			String t0 = action.getTerm(0).toString();
+			gui.out(t0);
+			
+		}
 		else logger.info("Executing an action which is not implemented: "+ action);
 		
 		informAgsEnvironmentChanged();
@@ -91,10 +96,6 @@ public class StoreHouseEnv extends Environment {
 	
 	public void truckArrived() {
 		if (!truckAtEntry) {
-
-			// TODO: nem jo a random, vhogy meg kell jegyezni melyik kamionok vannak epp
-			// megerkezve
-			// es a nem megerkezettek kozul valasztani.. but its something
 			int truckNum = randomGen.nextInt(numOfTrucks) + 1;
 			String agName = "truck" + Integer.toString(truckNum); // osszeallitja melyik truck agens erezze magat ugy h
 																	// eppen megjott
