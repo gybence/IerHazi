@@ -121,8 +121,7 @@ public class StoreHouseEnv extends Environment {
 		Thread truckThread = new Thread(() -> {
 			try {
 				while (isRunning) {
-					
-					truckArrived(); //ez a szal idonkent megerkeztet egy kamiont a raktarhoz
+						truckArrived(); //ez a szal idonkent megerkeztet egy kamiont a raktarhoz
 					
 					Thread.sleep(10000);
 				}

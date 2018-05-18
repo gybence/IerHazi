@@ -15,7 +15,7 @@ free(true).
 			.send(entryGate,tell,forklift(N));
 			.
 			
-+truck(T)[source(percept)] : true
++truck(T) : true
 		<- .print("megkaptam: ", T);
 		.my_name(N);
 		.abolish(free(_));

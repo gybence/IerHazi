@@ -4,7 +4,7 @@
 //vmi(false).
 /* Initial goals */
 
-+forklift(T) : true// & vmi(X) & X = true //forklift(F) & asdasd(F)
++forklift(T) : true						// & vmi(X) & X = true //forklift(F) & asdasd(F)
 		<- .my_name(N);
 			.send(T,tell,entryGate(N));
 			//.print("asd")    	//ez csak mindenfele teszt kod xdd
@@ -19,13 +19,20 @@
 +arrived(T) : true    //egy kamion szolt, hogy megerkezett
 		<- .print("kamion jott: ", T).
 		
-+opengate(T) : true    //a felhasznalo megnyomja a beengedes gombot, ekkor a kapu jelez a kamionnak, hogy bejohet
++opengate(T) : true   		 //a felhasznalo megnyomja a beengedes gombot, ekkor a kapu jelez a kamionnak, hogy bejohet
 		<- !opengategoal.
-		
-		
-+!opengategoal : opengate(T)
+
+
++!opengategoal : opengate(T) & free(F)
 		<- .send(T,tell,comein);
-			.findall(X,free(X),L);
-			assignTruckToForklift(L, T);
-			.abolish(arrived(T)[source(T)]); //el lehet felejteni h a kamion megerkezett, nem fontos mar
-			.abolish(opengate(T)).
+			.print(F,T);
+			.send(F,tell,truck(T));
+			//.findall(X,free(X),L);
+			//assignTruckToForklift(L, T);
+			.abolish(arrived(_)); //el lehet felejteni h a kamion megerkezett, nem fontos mar
+			.
+
++!opengategoal : opengate(T) & not free(F) //nem vol szabad fl
+		<- .print("fml");
+			.
+			
