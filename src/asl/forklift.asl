@@ -1,7 +1,6 @@
 // Agent forklift in project ierHazi
 
 /* Initial beliefs and rules */
-free(true).
 /* Initial goals */
 
 !start.
@@ -16,17 +15,15 @@ free(true).
 			.
 			
 +truck(T,CL,O) : true
-		<- //.print("megkaptam: ", T);
+		<- //.print("truck assigned: ", T);
 		.my_name(N);
-		.abolish(free(_));
 		.send(entryGate,untell,free(N));
-		//nemertem
 		!unload
 		.
 
 
 +!unload : truck(T,CL,O)
-		<- .print("csinaltam valamit ",T,"-vel");
+		<- .print("unload started with ", T);
 			.send(shelf,tell,put(CL));
 			.
 
@@ -36,8 +33,21 @@ free(true).
 			.send(shelf,untell,put(CL));
 			.
 			
-+takeSuccess : true 
++putFailure : true
+		<- .print("TODO!!!");
+			.			
++done : true 
 		<- ?truck(T,CL,O);
+			.send(T,tell,finished); 
+			!done;
+			.
+
++!done : true
+		<- 
+			.abolish(putSuccess); .abolish(putFailure); .abolish(takeSuccess); .abolish(truck(_,_,_)); .abolish(done); 
 			.send(shelf,untell,take(O));
+			.my_name(N);
+			.send(entryGate,tell,free(N));
+			.print("loading finished");
 			.
 			

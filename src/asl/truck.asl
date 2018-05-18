@@ -14,9 +14,23 @@ order(math.ceil(math.random(25))). //megrendeles
 			.send(entryGate,tell,arrived(N,CL,O)).
 
 +comein : true   //a kamion jelzest kapott hogy bejohet
-		<- .print("bejutottam a raktarba");
+		<- .print("in the storehouse");
 		
 			//vmi; //oke ugy tunik igy az environmentnek lehet jelezni!!!!!!!!!!!!!!!!!!!!!! FONTOS
 			
-			.abolish(arrived[source(percept)]). //a kamion is elfelejtheti mar h megerkezett mert nem fontos
+			//.abolish(arrived[source(percept)]); //a kamion is elfelejtheti mar h megerkezett mert nem fontos
 			//TODO: szolni a shelfnek vagy a forklifteknek
+			.
+
++finished : true 
+		<- .print("bye");
+			!reset
+			.
+
++!reset : true 
+		<- .abolish(finished); .abolish(comein);
+			.my_name(N);
+			.send(entryGate,untell,arrived(N,_,_));
+			-+currentLoad(math.ceil(math.random(25)));
+			-+order(math.ceil(math.random(25)));
+			.

@@ -14,25 +14,25 @@ load(25).
 +put(CL)[source(S)] : (load(L) & capacity(C) & L + CL <= C)
 		<- -+load(L + CL);
 			?load(X);
-			.print("uj toltottsegi szint: ", X);
-			loadchanged(X);
+			.print("load level after put: ", X);
+			refresh(X);
 			.send(S,tell,putSuccess);
 			.
 			
 +put(CL)[source(S)] : not (load(L) & capacity(C) & L + CL <= C)
-		<- .print("bajvan, nem fert fel xdd");
+		<- .print("ERROR, there is not enough capacity");
 			.send(S,tell,putFailure);
 			.
 			
 +take(O)[source(S)] : (load(L) & capacity(C) & L - O >= 0)
 		<- -+load(L - O);
 			?load(X);
-			.print("uj toltottsegi szint: ", X);
-			loadchanged(X);
-			.send(S,tell,takeSuccess);
+			.print("load level after take: ", X);
+			refresh(X);
+			.send(S,tell,done);
 			.
 			
 +take(O)[source(S)] : not (load(L) & capacity(C) & L - O >= 0)
-<- .print("xdd baj van, nincs eleg cucc a raktarban");
-			.send(S,tell,takeFailure);
+		<- .print("ERROR, there are not enough items");
+			.send(S,tell,done);
 			.

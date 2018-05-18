@@ -22,7 +22,7 @@ public class StoreHouseEnv extends Environment {
 	private Logger logger = Logger.getLogger("ierHazi." + StoreHouseEnv.class.getName());
 
 	public StoreHouseEnv() {
-		randomGen = new Random(2); // ez pont jo seed 2,1,3
+		randomGen = new Random(2); 
 		gui = new GUI(this);
 
 		generateTrucks();
@@ -32,33 +32,17 @@ public class StoreHouseEnv extends Environment {
 
 	@Override
 	public boolean executeAction(String agName, Structure action) {
-
-		if(action.getFunctor().equals("vmi")) {
-			addPercept(agName,Literal.parseLiteral("vmi"));
-			//logger.info("addPercept lefutott"); 
-		}
-		//TODO if else-be a tobbi environment fele meno jelzes es pls ezt a getFunctort hasznaljuk
-		//Term t = action.getTerm(0); //igy kell kivenni a parametert ha van
-		else if (action.getFunctor().equals("assignTruckToForklift")) {
-			//szabad forkliftek listaba szedese
-			String t0 = action.getTerm(0).toString();
-			t0 = t0.substring(1,t0.length()-1);
-			
-			if(t0.length() > 0) {
-				String[] forklifts = t0.split(",");	
-				//kiosztando kamion neve
-				Term t1 = action.getTerm(1);
-				
-				
-				//az elso raero targonca megkapja a kamiont
-				addPercept(forklifts[0],Literal.parseLiteral("truck("+ t1+")"));
-				//logger.info("assignTruckToForklift lefutott ");
-			}
-		}
-		else if(action.getFunctor().equals("loadchanged")) {
+		
+		if(action.getFunctor().equals("refresh")) {
 				String t0 = action.getTerm(0).toString();
 				load = Integer.parseInt(t0);
 				gui.updateLoad();
+		}
+		else if(action.getFunctor().equals("deletepercepts")) {
+			String t0 = action.getTerm(0).toString();
+			removePercept(agName,Literal.parseLiteral("opengate("+ t0+")"));
+			removePercept(t0,Literal.parseLiteral("arrived"));
+			
 		}
 		else logger.info("Executing an action which is not implemented: "+ action);
 		
@@ -83,13 +67,8 @@ public class StoreHouseEnv extends Environment {
 
 	public void openGate() { //gombnyomas kezelo fv
 		if (truckAtEntry) {
-
-			//listAgentPercepts("entryGate");
 			
 			addPercept("entryGate", Literal.parseLiteral("opengate(" + lastArrivedTruckName + ")")); 
-			
-			//listAgentPercepts("entryGate");
-		
 			
 			truckAtEntry = false;
 			gui.entryButton.setEnabled(false);
@@ -100,13 +79,14 @@ public class StoreHouseEnv extends Environment {
 
 
 	@SuppressWarnings("unused")
-	private void listAgentPercepts(String agName) {
+	private String listAgentPercepts(String agName) {
 		List<Literal> perceptList = consultPercepts(agName);
 		String percepts = "";
 		for(Literal p : perceptList)
 			percepts = percepts + " " + p.toString();	
 
 		logger.info(agName +" percepts: " + percepts);
+		return percepts;
 	}
 	
 	public void truckArrived() {
