@@ -1,21 +1,19 @@
 // Agent truck in project ierHazi
 
 /* Initial beliefs and rules */
-currentLoad(math.ceil(math.random(25))). //tfh ennyi doboz van rajta a letrehozaskor (ennyivel erkezik meg eloszor)
-order(math.ceil(math.random(25))). //megrendeles
+deposit(math.ceil(math.random(25))). //tfh ennyi doboz van rajta a letrehozaskor (ennyivel erkezik meg eloszor)
+withdraw(math.ceil(math.random(25))). //megrendeles
+
 /* Initial goals */
 
 /* Plans */
 
-+arrived : true //environment allitja be egy kulon szalrol! megerkezik a kamion, szol a kapunak (ember)
++arrived : true //environment allitja be egy kulon szalrol! megerkezik a kamion, szol a kapunak
 		<- .my_name(N);
-			?currentLoad(CL);
-			?order(O);
-			.send(entryGate,tell,arrived(N,CL,O)).
-
-+comein : true   //a kamion jelzest kapott hogy bejohet
-		<- .print("in the storehouse");
-			.
+			?deposit(D);
+			?withdraw(W);
+			.print("Hi, deposit: ", D, ", withdraw: ", W);
+			.send(entryGate,tell,arrived(N,D,W)).
 
 +finished : true 
 		<- .print("bye");
@@ -23,9 +21,9 @@ order(math.ceil(math.random(25))). //megrendeles
 			.
 
 +!reset : true 
-		<- .abolish(finished); .abolish(comein);
+		<- .abolish(finished);
 			.my_name(N);
 			.send(entryGate,untell,arrived(N,_,_));
-			-+currentLoad(math.ceil(math.random(25)));
-			-+order(math.ceil(math.random(25)));
+			-+deposit(math.ceil(math.random(25)));
+			-+withdraw(math.ceil(math.random(25)));
 			.

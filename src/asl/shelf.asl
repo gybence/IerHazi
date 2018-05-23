@@ -3,6 +3,7 @@
 /* Initial beliefs and rules */
 capacity(100).
 load(0).
+
 /* Initial goals */
 
 /* Plans */
@@ -11,30 +12,30 @@ load(0).
 		<- .my_name(N);
 		.send(T,tell,shelf(N)).
 		
-+put(CL)[source(S)] : (load(L) & capacity(C) & L + CL <= C)
-		<- -+load(L + CL);
++deposit(D)[source(S)] : (load(L) & capacity(C) & L + D <= C) //sikeresen be lehet meg rakni a dobozokat a raktarba (van hely)
+		<- -+load(L + D);
 			?load(X);
 			.print("load level after put: ", X);
 			refresh(X);
 			.send(S,tell,putSuccess);
 			.
 			
-+put(CL)[source(S)] : not (load(L) & capacity(C) & L + CL <= C)
-		<- .print("ERROR, there is not enough capacity");
-			write("There is not enough capacity in the storehouse");
++deposit(D)[source(S)] : not (load(L) & capacity(C) & L + D <= C) //nincs eleg hely
+		<- .print("ERROR, not enough space in storehouse");
+			write("ERROR, not enough space in storehouse");
 			.send(S,tell,putFailure);
 			.
 			
-+take(O)[source(S)] : (load(L) & capacity(C) & L - O >= 0)
-		<- -+load(L - O);
++withdraw(W)[source(S)] : (load(L) & capacity(C) & L - W >= 0) //sikerult kivenni a raktarbol a megrendeleshez elegendo dobozt
+		<- -+load(L - W);
 			?load(X);
 			.print("load level after take: ", X);
 			refresh(X);
 			.send(S,tell,done);
 			.
 			
-+take(O)[source(S)] : not (load(L) & capacity(C) & L - O >= 0)
-		<- .print("ERROR, there are not enough items");
-			write("There are not enough items in the storehouse");
++withdraw(W)[source(S)] : not (load(L) & capacity(C) & L - W >= 0) //nem volt eleg doboz
+		<- .print("ERROR, not enough items in storehouse");
+			write("ERROR, not enough items in storehouse");
 			.send(S,tell,done);
 			.

@@ -29,7 +29,7 @@ public class GUI extends JFrame {
         
         //forklifts
         JPanel numOfForklifts = new JPanel();
-        numOfFLsLabel = new JLabel("Number of Forklifts: " + env.getNumOfForklifts());
+        numOfFLsLabel = new JLabel("Free Forklifts: " + env.getNumOfForklifts());
         numOfForklifts.add(numOfFLsLabel);
         
         //open the gate
@@ -76,8 +76,8 @@ public class GUI extends JFrame {
 		capacityLabel.setText("Current load: " + env.getLoad() + " / " + StoreHouseEnv.maxCapacity);
 	}
 	
-	public void changeForkliftNum(int num) {
-		numOfFLsLabel.setText("Number of Forklifts: " + env.getNumOfForklifts());
+	public void updateForkliftNum() {
+		numOfFLsLabel.setText("Free Forklifts: " + env.getNumOfForklifts());
 	}	
 	public void out(String out) {
         output.append(out + "\n");

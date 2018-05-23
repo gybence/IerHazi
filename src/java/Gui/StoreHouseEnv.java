@@ -4,16 +4,18 @@ package Gui;
 import jason.asSyntax.*;
 import jason.environment.*;
 import java.util.logging.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class StoreHouseEnv extends Environment {
 
 	public static final int maxCapacity = 100;
 	private GUI gui;
-	private int numOfForklifts = 2;
+	private int numOfForklifts = 0;
 	private int numOfTrucks = 3;
-	private int load = 25;
+	private int load = 0;
 	private boolean isRunning = true;
 	private boolean truckAtEntry = false;
 	private Random randomGen;
@@ -24,11 +26,8 @@ public class StoreHouseEnv extends Environment {
 	public StoreHouseEnv() {
 		randomGen = new Random(2); 
 		gui = new GUI(this);
-
 		generateTrucks();
 	}
-
-
 
 	@Override
 	public boolean executeAction(String agName, Structure action) {
@@ -38,15 +37,39 @@ public class StoreHouseEnv extends Environment {
 				load = Integer.parseInt(t0);
 				gui.updateLoad();
 		}
-		else if(action.getFunctor().equals("deletepercepts")) {
+		else if(action.getFunctor().equals("removeEntryGatePercepts")) {
 			String t0 = action.getTerm(0).toString();
-			removePercept(agName,Literal.parseLiteral("opengate("+ t0+")"));
+			removePercept(agName,Literal.parseLiteral("opengate(" + t0 + ")"));
 			removePercept(t0,Literal.parseLiteral("arrived"));
-			
 		}
 		else if(action.getFunctor().equals("write")) {
 			String t0 = action.getTerm(0).toString();
-			gui.out(t0);
+			gui.out(t0.substring(1,t0.length()-1));
+			
+		}
+		else if(action.getFunctor().equals("freeforklift")) {
+			numOfForklifts += 1;
+			gui.updateForkliftNum();	
+			
+		}
+		else if(action.getFunctor().equals("enablebutton")) {
+			truckAtEntry = true;
+			gui.entryButton.setEnabled(true);
+			gui.out("Truck waiting at entry!");
+		}
+		else if(action.getFunctor().equals("opensuccess")) {
+			truckAtEntry = false;
+			numOfForklifts -= 1;
+			gui.updateForkliftNum();	
+			gui.entryButton.setEnabled(false);
+			gui.out("Truck entered!");
+			
+		}
+		else if(action.getFunctor().equals("openfailure")) {
+			
+			truckAtEntry = false;
+			gui.entryButton.setEnabled(false);
+			gui.out("Truck could not enter!");
 			
 		}
 		else logger.info("Executing an action which is not implemented: "+ action);
@@ -71,13 +94,8 @@ public class StoreHouseEnv extends Environment {
 	}
 
 	public void openGate() { //gombnyomas kezelo fv
-		if (truckAtEntry) {
-			
+		if (truckAtEntry) {	
 			addPercept("entryGate", Literal.parseLiteral("opengate(" + lastArrivedTruckName + ")")); 
-			
-			truckAtEntry = false;
-			gui.entryButton.setEnabled(false);
-			gui.out("Truck entered!");
 		}
 	}
 
@@ -96,16 +114,13 @@ public class StoreHouseEnv extends Environment {
 	
 	public void truckArrived() {
 		if (!truckAtEntry) {
+			
 			int truckNum = randomGen.nextInt(numOfTrucks) + 1;
-			String agName = "truck" + Integer.toString(truckNum); // osszeallitja melyik truck agens erezze magat ugy h
-																	// eppen megjott
-
+			String agName = "truck" + Integer.toString(truckNum);
+																	
 			//jelzes az agensek es az UI fele
 			addPercept(agName, Literal.parseLiteral("arrived"));
 			lastArrivedTruckName = agName;
-			truckAtEntry = true;
-			gui.entryButton.setEnabled(true);
-			gui.out("Truck waiting at entry!");
 		}
 	}
 	
@@ -113,9 +128,9 @@ public class StoreHouseEnv extends Environment {
 		Thread truckThread = new Thread(() -> {
 			try {
 				while (isRunning) {
-						truckArrived(); //ez a szal idonkent megerkeztet egy kamiont a raktarhoz
+						truckArrived();
 					
-					Thread.sleep(10000);
+					Thread.sleep(5000);
 				}
 			} catch (InterruptedException e) {
 				throw new RuntimeException("InterruptedException caught", e);

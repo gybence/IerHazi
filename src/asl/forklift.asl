@@ -1,56 +1,57 @@
 // Agent forklift in project ierHazi
 
 /* Initial beliefs and rules */
-/* Initial goals */
 
+/* Initial goals */
 !start.
+
 /* Plans */
 
 +!start : true 
-		<- //.print("new forklift added");
-			.my_name(N);
+		<- .my_name(N);
 			.send(shelf,tell,forklift(N));
 			.send(entryGate,tell,free(N));
 			.send(entryGate,tell,forklift(N));
 			.
 			
-+truck(T,CL,O) : true
-		<- //.print("truck assigned: ", T);
-		.my_name(N);
-		.send(entryGate,untell,free(N));
-		!unload
-		.
++truck(_,_,_) : true
+		<- .my_name(N);
+			.send(entryGate,untell,free(N));
+			!unload
+			.
 
 
-+!unload : truck(T,CL,O)
-		<- .print("unload started with ", T);
-			.send(shelf,tell,put(CL));
++!unload : truck(T,D,W)
+		<- .print("unload of truck: ", T, " started");
+			.wait(3000); //pakolas szimulalasa
+			.send(shelf,tell,deposit(D));
 			.
 
 +putSuccess : true
-		<- ?truck(T,CL,O);
-			.send(shelf,tell,take(O));
-			.send(shelf,untell,put(CL));
+		<- ?truck(T,D,W);
+			.wait(3000); //pakolas szimulalasa
+			.send(shelf,tell,withdraw(W));
+			.send(shelf,untell,deposit(_));
 			.
 			
 +putFailure : true
-		<- ?truck(T,CL,O);
+		<- ?truck(T,D,W);
+			.wait(3000); //pakolas szimulalasa
 			.send(T,tell,finished); 
 			!done;
 			.
 						
 +done : true 
-		<- ?truck(T,CL,O);
+		<- ?truck(T,D,W);
 			.send(T,tell,finished); 
 			!done;
 			.
 
 +!done : true
-		<- 
-			.abolish(putSuccess); .abolish(putFailure); .abolish(takeSuccess); .abolish(truck(_,_,_)); .abolish(done); 
-			.send(shelf,untell,take(O));
+		<- .abolish(putSuccess); .abolish(putFailure); .abolish(takeSuccess); .abolish(truck(_,_,_)); .abolish(done); 
+			.send(shelf,untell,withdraw(_));
 			.my_name(N);
 			.send(entryGate,tell,free(N));
-			.print("loading finished");
+			.print("truck loading finished");
 			.
 			
