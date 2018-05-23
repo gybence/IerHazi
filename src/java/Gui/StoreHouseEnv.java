@@ -4,10 +4,8 @@ package Gui;
 import jason.asSyntax.*;
 import jason.environment.*;
 import java.util.logging.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class StoreHouseEnv extends Environment {
 
@@ -130,7 +128,7 @@ public class StoreHouseEnv extends Environment {
 				while (isRunning) {
 						truckArrived();
 					
-					Thread.sleep(5000);
+					Thread.sleep(2000);
 				}
 			} catch (InterruptedException e) {
 				throw new RuntimeException("InterruptedException caught", e);

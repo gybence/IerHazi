@@ -23,20 +23,19 @@
 
 +!unload : truck(T,D,W)
 		<- .print("unload of truck: ", T, " started");
-			.wait(3000); //pakolas szimulalasa
+			.wait(100*D); //pakolas szimulalasa
 			.send(shelf,tell,deposit(D));
 			.
 
 +putSuccess : true
 		<- ?truck(T,D,W);
-			.wait(3000); //pakolas szimulalasa
+			.wait(100*W); //pakolas szimulalasa
 			.send(shelf,tell,withdraw(W));
 			.send(shelf,untell,deposit(_));
 			.
 			
 +putFailure : true
 		<- ?truck(T,D,W);
-			.wait(3000); //pakolas szimulalasa
 			.send(T,tell,finished); 
 			!done;
 			.
