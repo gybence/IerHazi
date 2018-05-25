@@ -2,7 +2,7 @@
 
 /* Initial beliefs and rules */
 capacity(100).
-load(0).
+load(75).
 
 /* Initial goals */
 
@@ -15,7 +15,7 @@ load(0).
 +deposit(D)[source(S)] : (load(L) & capacity(C) & L + D <= C) //sikeresen be lehet meg rakni a dobozokat a raktarba (van hely)
 		<- -+load(L + D);
 			?load(X);
-			.print("load level after put: ", X);
+			.print("load level after deposit: ", X ," / ", C);
 			refresh(X);
 			.send(S,tell,putSuccess);
 			.
@@ -29,7 +29,7 @@ load(0).
 +withdraw(W)[source(S)] : (load(L) & capacity(C) & L - W >= 0) //sikerult kivenni a raktarbol a megrendeleshez elegendo dobozt
 		<- -+load(L - W);
 			?load(X);
-			.print("load level after take: ", X);
+			.print("load level after withdraw: ", X ," / ", C);
 			refresh(X);
 			.send(S,tell,done);
 			.

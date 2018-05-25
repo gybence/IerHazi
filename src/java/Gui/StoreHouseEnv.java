@@ -13,7 +13,7 @@ public class StoreHouseEnv extends Environment {
 	private GUI gui;
 	private int numOfForklifts = 0;
 	private int numOfTrucks = 3;
-	private int load = 0;
+	private int load = 75;
 	private boolean isRunning = true;
 	private boolean truckAtEntry = false;
 	private Random randomGen;

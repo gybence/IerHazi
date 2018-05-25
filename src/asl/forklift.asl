@@ -36,7 +36,8 @@
 			
 +putFailure : true
 		<- ?truck(T,D,W);
-			.send(T,tell,finished); 
+			.send(T,tell,needempty); 
+			.send(shelf,untell,deposit(_));
 			!done;
 			.
 						
